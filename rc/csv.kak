@@ -57,6 +57,7 @@ define-command csv-enable -params 1 -docstring "Enable the csv mode in the windo
     add-highlighter window/csv/comment/ regex %opt{csv_rgx} %opt{csv_faces}
     # echo -debug "csv_faces = %opt{csv_faces}"
     # echo -debug "csv_rgx = %opt{csv_rgx}"
+    hook -once -always window WinSetOption filetype=.* %{ remove-highlighter window/csv }
 }
 
 define-command csv-disable -docstring "Disable the csv highlighter in the window." %{
@@ -65,9 +66,5 @@ define-command csv-disable -docstring "Disable the csv highlighter in the window
 
 hook global WinSetOption filetype=csv %{
     csv-enable %opt{csv_sep}
-}
-
-hook global WinSetOption filetype=(?!csv).* %{
-    remove-highlighter window/csv
 }
 
